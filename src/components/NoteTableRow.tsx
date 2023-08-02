@@ -1,8 +1,11 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Note } from '../Note';
+import { chooseEditedNote } from '../redux/Actions';
 
 type Props = {
     note: Note;
+    id: number;
 }
 
 const dateDisplayOptions: Intl.DateTimeFormatOptions = {
@@ -14,6 +17,8 @@ export default function NoteTableRow(props: Props)
     const note = props.note;
     const dateStrings = note.dates.map(date => date.toLocaleDateString('uk', dateDisplayOptions)).join(', ');
     const creationDateString = note.creationTime.toLocaleDateString('uk', dateDisplayOptions);
+    const dispatch = useDispatch();
+
     return (<tr>
         <td key="name">
             {note.name}
@@ -31,7 +36,9 @@ export default function NoteTableRow(props: Props)
             {dateStrings}
         </td>
         <td key="buttons">
-            Buttons
+            <button onClick={() => dispatch(chooseEditedNote(props.id))}>
+            Edit
+            </button>
         </td>
     </tr>
     );

@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
 import { Note } from '../Note';
-import { setNoteContent, setNoteName } from '../redux/Actions';
+import { setNoteCategory, setNoteContent, setNoteName } from '../redux/Actions';
 
 type Props = {
     note: Note;
@@ -16,7 +16,7 @@ export default function EditableNoteTableRow(props: Props)
     const note = props.note;
     const dateStrings = note.dates.map(date => date.toLocaleDateString('uk', dateDisplayOptions)).join(', ');
     const creationDateString = note.creationTime.toLocaleDateString('uk', dateDisplayOptions);
-
+    const categories = Note.categories;
     const dispatch = useDispatch();
     return (<tr>
         <td key="name">
@@ -30,7 +30,16 @@ export default function EditableNoteTableRow(props: Props)
             {creationDateString}
         </td>
         <td key="category" >
-            {note.category}
+            <select onChange={(e) => {
+                const value = e.target.value;
+                dispatch(setNoteCategory(note, value));
+            }
+            }
+                value={note.category}>
+                {categories.map(category =>
+                    <option value={category}>{category}</option>
+                )}
+            </select>
         </td>
         <td key="description">
             <input type="text" value={note.description} onChange={(e) => {
