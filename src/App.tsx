@@ -10,6 +10,7 @@ import NoteTable from './components/NoteTable';
 import StatTable from './components/StatTable';
 import { addNote } from './redux/Actions';
 import NewNoteButton from './components/NewNoteButton';
+import ViewArchivedButton from './components/ViewArchivedButton';
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
             <Provider store={store}>
                 <NoteTable />
                 <div>
+                    <ViewArchivedButton><span>View Archived</span></ViewArchivedButton>
                     <NewNoteButton ><span>New Note</span></NewNoteButton>
                 </div>
                 <StatTable />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Note } from '../Note';
-import { chooseEditedNote } from '../redux/Actions';
+import { archiveNote, chooseEditedNote, deleteNote } from '../redux/Actions';
 
 type Props = {
     note: Note;
@@ -37,7 +37,13 @@ export default function NoteTableRow(props: Props)
         </td>
         <td key="buttons">
             <button onClick={() => dispatch(chooseEditedNote(props.id))}>
-            Edit
+                Edit
+            </button>
+            <button onClick={() => dispatch(archiveNote(props.id))}>
+                Archive
+            </button>
+            <button onClick={() => dispatch(deleteNote(props.id))}>
+                Delete
             </button>
         </td>
     </tr>

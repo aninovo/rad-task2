@@ -1,10 +1,12 @@
 import React, { ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
 import { Note } from '../Note';
-import { setNoteCategory, setNoteContent, setNoteName } from '../redux/Actions';
+import { archiveNote, chooseEditedNote, deleteNote, setNoteCategory, setNoteContent, setNoteName } from '../redux/Actions';
+
 
 type Props = {
     note: Note;
+    id: number;
 }
 
 const dateDisplayOptions: Intl.DateTimeFormatOptions = {
@@ -52,7 +54,15 @@ export default function EditableNoteTableRow(props: Props)
             {dateStrings}
         </td>
         <td key="buttons">
-            Buttons
+            <button onClick={() => dispatch(chooseEditedNote(-1))}>
+                Save
+            </button>
+            <button onClick={() => dispatch(archiveNote(props.id))}>
+                Archive
+            </button>
+            <button onClick={() => dispatch(deleteNote(props.id))}>
+                Delete
+            </button>
         </td>
     </tr>
     );

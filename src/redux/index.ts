@@ -1,6 +1,6 @@
 import { Action, createStore} from 'redux'
 import { Note } from '../Note';
-import { ADD_NOTE, CHOOSE_EDITED_NOTE, EditNoteAction, NoteAction, SET_NOTE_CATEGORY, SET_NOTE_CONTENT, SET_NOTE_NAME } from './ActionTypes'
+import { ADD_NOTE, ARCHIVE_NOTE, CHOOSE_EDITED_NOTE, DELETE_NOTE, EditNoteAction, NoteAction, SET_NOTE_CATEGORY, SET_NOTE_CONTENT, SET_NOTE_NAME, VIEW_ARCHIVED } from './ActionTypes'
 // DEVTOOLS
 import { composeWithDevTools } from 'redux-devtools-extension'
 
@@ -59,12 +59,36 @@ const reducer = (state = initialState, action: Action | NoteAction | EditNoteAct
             edited: payload.edited
         };
     }
+
+    if (action.type === ARCHIVE_NOTE) {
+        const payload = (action as EditNoteAction).payload;
+        return {
+            ...state,
+            notes: state.notes.map(
+                (note, id) => id === payload.edited ? new Note(note.name, note.category, note.description, note.creationTime, !note.archived) : note,
+            )
+        }
+    }
+    if (action.type === DELETE_NOTE) {
+        const payload = (action as EditNoteAction).payload;
+        return {
+            ...state,
+            notes: state.notes.filter((note, id) => id !== payload.edited )
+        }
+    }
     if (action.type === ADD_NOTE) {
         const newState = {
             ...state,
-            notes: [...state.notes, new Note('', 'Idea', '', new Date(Date.now()))]
+            viewArchived: false,
+            notes: [...state.notes, new Note('name', 'Idea', 'content', new Date(Date.now()))]
         }
-        newState.edited = newState.notes.length - 1;
+        return newState;
+    }
+    if (action.type === VIEW_ARCHIVED) {
+        const newState = {
+            ...state,
+            viewArchived: !state.viewArchived
+        }
         return newState;
     }
         

@@ -1,5 +1,5 @@
 import { Note } from '../Note'
-import { ADD_NOTE, CHOOSE_EDITED_NOTE, SET_NOTE_CATEGORY, SET_NOTE_CONTENT, SET_NOTE_NAME } from './ActionTypes'
+import { ADD_NOTE, ARCHIVE_NOTE, CHOOSE_EDITED_NOTE, DELETE_NOTE, SET_NOTE_CATEGORY, SET_NOTE_CONTENT, SET_NOTE_NAME, VIEW_ARCHIVED } from './ActionTypes'
 
 
 export const setNoteName = (note: Note, name: string) => {
@@ -40,9 +40,34 @@ export const addNote = () => {
     }
 }
 
+
+export const viewArchived= () => {
+    return {
+        type: VIEW_ARCHIVED,
+    }
+}
+
 export const chooseEditedNote = (note: number) => {
     return {
         type: CHOOSE_EDITED_NOTE,
+        payload: {
+            edited: note,
+        }
+    }
+}
+
+export const deleteNote = (note: number) => {
+    return {
+        type: DELETE_NOTE,
+        payload: {
+            edited: note,
+        }
+    }
+}
+
+export const archiveNote = (note: number) => {
+    return {
+        type: ARCHIVE_NOTE,
         payload: {
             edited: note,
         }
