@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
 import { Note } from '../Note';
-import { archiveNote, chooseEditedNote, deleteNote } from '../redux/Actions';
+import { archiveNote, chooseEditedNote, deleteNote, setNoteCategory, setNoteContent, setNoteName } from '../redux/Actions';
+
 
 type Props = {
     note: Note;
@@ -12,39 +13,56 @@ const dateDisplayOptions: Intl.DateTimeFormatOptions = {
     year: 'numeric', month: 'long', day: 'numeric'
 };
 
-export default function NoteTableRow(props: Props)
+export default function EditableNoteTableRow(props: Props)
     : React.ReactElement {
     const note = props.note;
     const dateStrings = note.dates.map(date => date.toLocaleDateString('uk', dateDisplayOptions)).join(', ');
     const creationDateString = note.creationTime.toLocaleDateString('uk', dateDisplayOptions);
+    const categories = Note.categories;
     const dispatch = useDispatch();
-
-    return (<tr className="bg-slate-100">
+    return (<tr className="bg-white">
         <td key="name" className="overflow-hidden truncate w-2">
-            {note.name}
+            <input type="text" value={note.name} onChange={(e) => {
+                const value = e.target.value;
+                dispatch(setNoteName(note, value));
+            }
+            } />
         </td>
         <td key="creationTime" className="overflow-hidden truncate w-2">
             {creationDateString}
         </td>
         <td key="category" className="overflow-hidden truncate w-2">
-            {note.category}
+            <select onChange={(e) => {
+                const value = e.target.value;
+                dispatch(setNoteCategory(note, value));
+            }
+            }
+                value={note.category}>
+                {categories.map(category =>
+                    <option value={category}>{category}</option>
+                )}
+            </select>
         </td>
         <td key="description" className="overflow-hidden truncate w-2">
-            {note.description}
+            <input type="text" value={note.description} onChange={(e) => {
+                const value = e.target.value;
+                dispatch(setNoteContent(note, value));
+            }
+            } />
         </td>
         <td key="dateStrings" className="overflow-hidden truncate w-2">
             {dateStrings}
         </td>
         <td key="buttons">
             <button className="items-center justify-center  p-1 m-1 text-slate-800 border border-slate-200"
-                onClick={() => dispatch(chooseEditedNote(props.id))}>
-                Edit
+                onClick={() => dispatch(chooseEditedNote(-1))}>
+                Save
             </button>
             <button className="items-center justify-center  p-1 m-1 text-slate-800 border border-slate-200"
                 onClick={() => dispatch(archiveNote(props.id))}>
                 Archive
             </button>
-            <button className="items-center justify-center p-1 m-1 text-slate-800 border border-slate-200"
+            <button className="items-center justify-center  p-1 m-1 text-slate-800 border border-slate-200"
                 onClick={() => dispatch(deleteNote(props.id))}>
                 Delete
             </button>

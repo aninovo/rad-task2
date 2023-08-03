@@ -6,7 +6,7 @@ import StatTableRow from "./StatTableRow";
 import Table from "./Table";
 
 function StatTable() {
-    const notes = useSelector((state: RootState) => state.notes);
+    const notes = useSelector((state: RootState) => state.notes );
     return (
         <Table headers={['Category', 'Active', 'Archived']}>
             {Note.categories.map((cat, id) =>
