@@ -10,7 +10,8 @@ function NewNoteButton( props: Props) {
 
     const dispatch = useDispatch();
     return (
-        <button onClick={() => dispatch(addNote())}>
+        <button className="items-center justify-center  p-1 m-1  text-slate-800 border border-slate-200"
+            onClick={() => dispatch(addNote())}>
             {props.children}
         </button>
     )

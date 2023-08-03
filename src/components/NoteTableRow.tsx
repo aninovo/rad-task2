@@ -19,30 +19,33 @@ export default function NoteTableRow(props: Props)
     const creationDateString = note.creationTime.toLocaleDateString('uk', dateDisplayOptions);
     const dispatch = useDispatch();
 
-    return (<tr>
-        <td key="name">
+    return (<tr className="bg-slate-100">
+        <td key="name" className="overflow-hidden truncate w-2">
             {note.name}
         </td>
-        <td key="creationTime" >
+        <td key="creationTime" className="overflow-hidden truncate w-2">
             {creationDateString}
         </td>
-        <td key="category" >
+        <td key="category" className="overflow-hidden truncate w-2">
             {note.category}
         </td>
-        <td key="description">
+        <td key="description" className="overflow-hidden truncate w-2">
             {note.description}
         </td>
-        <td key="dateStrings">
+        <td key="dateStrings" className="overflow-hidden truncate w-2">
             {dateStrings}
         </td>
         <td key="buttons">
-            <button onClick={() => dispatch(chooseEditedNote(props.id))}>
+            <button className="items-center justify-center  p-1 m-1 text-slate-800 border border-slate-200"
+                onClick={() => dispatch(chooseEditedNote(props.id))}>
                 Edit
             </button>
-            <button onClick={() => dispatch(archiveNote(props.id))}>
+            <button className="items-center justify-center  p-1 m-1 text-slate-800 border border-slate-200"
+                onClick={() => dispatch(archiveNote(props.id))}>
                 Archive
             </button>
-            <button onClick={() => dispatch(deleteNote(props.id))}>
+            <button className="items-center justify-center p-1 m-1 text-slate-800 border border-slate-200"
+                onClick={() => dispatch(deleteNote(props.id))}>
                 Delete
             </button>
         </td>

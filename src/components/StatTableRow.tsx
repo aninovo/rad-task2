@@ -15,7 +15,7 @@ export default function StatTableRow(props: Props)
     const archived = categoryNotes.reduce(
         (total: number, note: Note) => (note.archived) ? total + 1 : total,
         0);
-    return (<tr>
+    return (<tr className="bg-slate-100">
         <td key="categoryName">
             {props.category}
         </td>

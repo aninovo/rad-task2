@@ -20,18 +20,18 @@ export default function EditableNoteTableRow(props: Props)
     const creationDateString = note.creationTime.toLocaleDateString('uk', dateDisplayOptions);
     const categories = Note.categories;
     const dispatch = useDispatch();
-    return (<tr>
-        <td key="name">
+    return (<tr className="bg-white">
+        <td key="name" className="overflow-hidden truncate w-2">
             <input type="text" value={note.name} onChange={(e) => {
                 const value = e.target.value;
                 dispatch(setNoteName(note, value));
             }
             } />
         </td>
-        <td key="creationTime" >
+        <td key="creationTime" className="overflow-hidden truncate w-2">
             {creationDateString}
         </td>
-        <td key="category" >
+        <td key="category" className="overflow-hidden truncate w-2">
             <select onChange={(e) => {
                 const value = e.target.value;
                 dispatch(setNoteCategory(note, value));
@@ -43,24 +43,27 @@ export default function EditableNoteTableRow(props: Props)
                 )}
             </select>
         </td>
-        <td key="description">
+        <td key="description" className="overflow-hidden truncate w-2">
             <input type="text" value={note.description} onChange={(e) => {
                 const value = e.target.value;
                 dispatch(setNoteContent(note, value));
             }
             } />
         </td>
-        <td key="dateStrings">
+        <td key="dateStrings" className="overflow-hidden truncate w-2">
             {dateStrings}
         </td>
         <td key="buttons">
-            <button onClick={() => dispatch(chooseEditedNote(-1))}>
+            <button className="items-center justify-center  p-1 m-1 text-slate-800 border border-slate-200"
+                onClick={() => dispatch(chooseEditedNote(-1))}>
                 Save
             </button>
-            <button onClick={() => dispatch(archiveNote(props.id))}>
+            <button className="items-center justify-center  p-1 m-1 text-slate-800 border border-slate-200"
+                onClick={() => dispatch(archiveNote(props.id))}>
                 Archive
             </button>
-            <button onClick={() => dispatch(deleteNote(props.id))}>
+            <button className="items-center justify-center  p-1 m-1 text-slate-800 border border-slate-200"
+                onClick={() => dispatch(deleteNote(props.id))}>
                 Delete
             </button>
         </td>

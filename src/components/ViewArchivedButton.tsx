@@ -10,7 +10,8 @@ function ViewArchivedButton( props: Props) {
 
     const dispatch = useDispatch();
     return (
-        <button onClick={() => dispatch(viewArchived())}>
+        <button className="items-center justify-center  p-1 m-1  text-slate-800 border border-slate-200"
+            onClick={() => dispatch(viewArchived())}>
             {props.children}
         </button>
     )
